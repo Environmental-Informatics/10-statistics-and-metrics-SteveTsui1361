@@ -145,10 +145,10 @@ def GetAnnualStatistics(DataDF):
     
     # Seperate data into yearly data
     DataDF['W_year']=DataDF.index.to_period('A-Sep')
-    DataDF['W_year']=DataDF['W_year']-1    
+    #DataDF['W_year']=DataDF['W_year']-1    
     
     # Define the name of columns
-    cols=['site_no','Mean Flow','Peak Flow','Median','Coeff Var','Skew','Tqmean','R-B Index','7Q','3xMedian']
+    cols=['site_no','Mean Flow','Peak Flow','Median','Coeff Var','Skew','TQmean','R-B Index','7Q','3xMedian']
    
     # Create new dataframe
     yearly_avg=DataDF.groupby('W_year').mean()
@@ -162,7 +162,7 @@ def GetAnnualStatistics(DataDF):
     WYDataDF['Median']=GroupD['Discharge'].median()
     WYDataDF['Coeff Var']=(GroupD['Discharge'].std()/GroupD['Discharge'].mean())*100
     WYDataDF['Skew']=GroupD['Discharge'].apply(lambda x: stats.skew(x))
-    WYDataDF['Tqmean']=GroupD['Discharge'].apply(lambda x:CalcTqmean(x))
+    WYDataDF['TQmean']=GroupD['Discharge'].apply(lambda x:CalcTqmean(x))
     WYDataDF['R-B Index']=GroupD['Discharge'].apply(lambda x:CalcRBindex(x))
     WYDataDF['7Q']=GroupD['Discharge'].apply(lambda x:Calc7Q(x))
     WYDataDF['3xMedian']=GroupD['Discharge'].apply(lambda x:CalcExceed3TimesMedian(x))
@@ -175,7 +175,7 @@ def GetMonthlyStatistics(DataDF):
     of monthly values for each year."""
     
     # Define the name of columns and create a new dataframe
-    cols=['site_no','Mean Flow','Coeff Var','Tqmean','R-B Index']
+    cols=['site_no','Mean Flow','Coeff Variation','Tqmean','R-B Index']
     
     # Devide the dataset into monthly data
     Mon_Data=DataDF.resample('M').mean()
@@ -185,7 +185,7 @@ def GetMonthlyStatistics(DataDF):
     #Calculate descriptive values
     MoDataDF['site_no']=GroupD['site_no'].min()
     MoDataDF['Mean Flow']=GroupD['Discharge'].mean()
-    MoDataDF['Coeff Var']=(GroupD['Discharge'].std()/GroupD['Discharge'].mean())*100
+    MoDataDF['Coeff Variation']=(GroupD['Discharge'].std()/GroupD['Discharge'].mean())*100
     MoDataDF['Tqmean']=GroupD['Discharge'].apply(lambda x:CalcTqmean(x))
     MoDataDF['R-B Index']=GroupD['Discharge'].apply(lambda x:CalcRBindex(x))
     return ( MoDataDF )
@@ -206,7 +206,7 @@ def GetMonthlyAverages(MoDataDF):
     for each metric in the original dataframe."""
     
     # Define the name of columns and create a new dataframe
-    cols=['site_no','Mean Flow','Coeff Var','Tqmean','R-B Index']
+    cols=['site_no','Mean Flow','Coeff Variation','Tqmean','R-B Index']
     m=[3,4,5,6,7,8,9,10,11,0,1,2]
     index=0
     
@@ -217,7 +217,7 @@ def GetMonthlyAverages(MoDataDF):
     for i in range(12):
         MonthlyAverages.iloc[index,0]=MoDataDF['site_no'][::12].mean()
         MonthlyAverages.iloc[index,1]=MoDataDF['Mean Flow'][m[index]::12].mean()
-        MonthlyAverages.iloc[index,2]=MoDataDF['Coeff Var'][m[index]::12].mean()
+        MonthlyAverages.iloc[index,2]=MoDataDF['Coeff Variation'][m[index]::12].mean()
         MonthlyAverages.iloc[index,3]=MoDataDF['Tqmean'][m[index]::12].mean()
         MonthlyAverages.iloc[index,4]=MoDataDF['R-B Index'][m[index]::12].mean()
         index+=1
