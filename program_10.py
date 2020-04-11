@@ -179,7 +179,7 @@ def GetMonthlyStatistics(DataDF):
     
     # Devide the dataset into monthly data
     Mon_Data=DataDF.resample('M').mean()
-    MoDataDF=pd.DataFrame(index=Mon_Data.index,columns=cols)
+    MoDataDF=pd.DataFrame(0,index=Mon_Data.index,columns=cols)
     GroupD=DataDF.resample('M')
     
     #Calculate descriptive values
@@ -188,7 +188,7 @@ def GetMonthlyStatistics(DataDF):
     MoDataDF['Coeff Var']=(GroupD['Discharge'].std()/GroupD['Discharge'].mean())*100
     MoDataDF['Tqmean']=GroupD['Discharge'].apply(lambda x:CalcTqmean(x))
     MoDataDF['R-B Index']=GroupD['Discharge'].apply(lambda x:CalcRBindex(x))
-    
+    print(MoDataDF.head())
     return ( MoDataDF )
 
 def GetAnnualAverages(WYDataDF):
@@ -272,7 +272,7 @@ if __name__ == '__main__':
         MonthlyAverages[file] = GetMonthlyAverages(MoDataDF[file])
         
         print("-"*50, "\n\nSummary of monthly metrics...\n\n", MoDataDF[file].describe(), "\n\nAnnual Monthly Averages...\n\n", MonthlyAverages[file])
-        
+    
     # Write data into annual metrics csv file
     Wc = WYDataDF['Wildcat']
     Wc['Station'] = 'Wildcat'
@@ -287,7 +287,7 @@ if __name__ == '__main__':
     Tip_m = MoDataDF['Tippe']
     Tip_m['Station'] = 'Tippe'
     Wc_m = Wc_m.append(Tip_m)
-    Wc.to_csv('Monthly_Metrics.csv',sep=',', index=True)
+    Wc_m.to_csv('Monthly_Metrics.csv',sep=',', index=True)
     
     # Write data into average annual metrics text file
     Wc_avg = AnnualAverages['Wildcat']
