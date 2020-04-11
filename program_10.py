@@ -178,9 +178,9 @@ def GetMonthlyStatistics(DataDF):
     cols=['site_no','Mean Flow','Coeff Var','TQmean','R-B Index']
     
     # Devide the dataset into monthly data
-    Mon_Data=DataDF.resample('M').mean()
+    Mon_Data=DataDF.resample('MS').mean()
     MoDataDF=pd.DataFrame(0,index=Mon_Data.index,columns=cols)
-    GroupD=DataDF.resample('M', closed='right')
+    GroupD=DataDF.resample('MS')
     
     #Calculate descriptive values
     MoDataDF['site_no']=GroupD['site_no'].min()
