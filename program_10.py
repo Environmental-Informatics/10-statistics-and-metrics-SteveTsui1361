@@ -65,7 +65,7 @@ def CalcTqmean(Qvalues):
        the Tqmean value for the given data array."""
     
     # Drop None values
-    Qvalues=Qvalues.dropna()
+    # Qvalues=Qvalues.dropna()
     
     # Calculate yearly average streamflow
     yearly_avg=Qvalues.mean()
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     Tip['Station'] = 'Tippe'
     Wc = Wc.append(Tip)
     Wc.to_csv('Annual_Metrics.csv',sep=',', index=True)
-    
+        
     # Write data into monthly metrics csv file
     Wc_m = MoDataDF['Wildcat']
     Wc_m['Station'] = 'Wildcat'
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     Tip_avg['Station'] = 'Tippe'
     Wc_avg = Wc_avg.append(Tip_avg)
     Wc_avg.to_csv('Average_Annual_Metrics.txt',sep='\t', index=True)
-    
+        
     # Write data into average monthly metrics text file
     Wc_avg_m = MonthlyAverages['Wildcat']
     Wc_avg_m['Station'] = 'Wildcat'
