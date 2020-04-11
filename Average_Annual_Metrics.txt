@@ -1,3 +1,4 @@
+site_no	3335000.0
 Mean Flow	866.4724567258028
 Peak Flow	10387.4
 Median	429.08
@@ -8,6 +9,7 @@ R-B Index	0.2711167902697777
 7Q	107.30571428571432
 3xMedian	63.36
 Station	Wildcat
+site_no	3331500.0
 Mean Flow	955.7706391196949
 Peak Flow	4896.0
 Median	706.51

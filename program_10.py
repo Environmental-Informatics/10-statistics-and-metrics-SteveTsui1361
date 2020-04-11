@@ -157,7 +157,7 @@ def GetAnnualStatistics(DataDF):
     GroupD=W_year
     
     #Calculate descriptive values 
-    WYDataDF['site_no']=GroupD['site_no']
+    WYDataDF['site_no']=GroupD['site_no'].min()
     WYDataDF['Mean Flow']=GroupD['Discharge'].mean()
     WYDataDF['Peak Flow']=GroupD['Discharge'].max()
     WYDataDF['Median']=GroupD['Discharge'].median()
