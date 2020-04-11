@@ -65,7 +65,7 @@ def CalcTqmean(Qvalues):
        the Tqmean value for the given data array."""
     
     # Drop None values
-    Qvalues=Qvalues.dropna()
+    #Qvalues=Qvalues.dropna()
     
     # Calculate yearly average streamflow
     #yearly_avg=Qvalues.mean()
