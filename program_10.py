@@ -65,13 +65,13 @@ def CalcTqmean(Qvalues):
        the Tqmean value for the given data array."""
     
     # Drop None values
-    # Qvalues=Qvalues.dropna()
+    Qvalues=Qvalues.dropna()
     
     # Calculate yearly average streamflow
-    yearly_avg=Qvalues.mean()
+    #yearly_avg=Qvalues.mean()
     
     # calculate the number of values bigger than yearly mean value
-    Tqmean = ((Qvalues > yearly_avg).sum())/len(Qvalues)
+    Tqmean = ((Qvalues > Qvalues.mean()).sum())/len(Qvalues)
     
     return ( Tqmean )
 
