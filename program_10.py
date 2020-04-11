@@ -65,7 +65,7 @@ def CalcTqmean(Qvalues):
        the Tqmean value for the given data array."""
     
     # Drop None values
-    # Qvalues=Qvalues.dropna()
+    Qvalues=Qvalues.dropna()
     
     # Calculate yearly average streamflow
     yearly_avg=Qvalues.mean()
@@ -87,11 +87,11 @@ def CalcRBindex(Qvalues):
     # Drop None values
     Qvalues=Qvalues.dropna()
     
-    diff_=Qvalues.diff()
-    diff_=diff_.dropna()
+    dif=Qvalues.diff()
+    dif=dif.dropna()
     
     # Calculate the sum of absolute values of day-to-day discharge change
-    Total_abs=abs(diff_).sum()
+    Total_abs=abs(dif).sum()
     
     # Total yearly discharge
     Total_dis=Qvalues.sum()
@@ -188,7 +188,6 @@ def GetMonthlyStatistics(DataDF):
     MoDataDF['Coeff Var']=(GroupD['Discharge'].std()/GroupD['Discharge'].mean())*100
     MoDataDF['Tqmean']=GroupD['Discharge'].apply(lambda x:CalcTqmean(x))
     MoDataDF['R-B Index']=GroupD['Discharge'].apply(lambda x:CalcRBindex(x))
-    print(MoDataDF.head())
     return ( MoDataDF )
 
 def GetAnnualAverages(WYDataDF):
